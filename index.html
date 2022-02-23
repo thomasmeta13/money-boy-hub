@@ -1,0 +1,371 @@
+<html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Solarity</title>
+    <meta name="description"
+          content="Advanced Hello World, WebXR! A-frame provides a hello world that is really remarkable, however you usually need to have controller selection and environment with movement.  With this example you get what works across the most headsets and controllers.">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="gray-translucent" />
+    <!-- *** CHANGE THESE TO COMPONENTS ON YOUR SERVER *** -->
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+
+    <script>
+        //a link cmponent to make aframe elements linkable in another page
+        AFRAME.registerComponent('simple-link', {
+            schema: {
+                href: { default: '' },
+                target: { default: '_blank' }
+            },
+            init: function () {
+                this.el.addEventListener('click', (e) => {
+                    window.open(this.data.href, this.data.target);
+                    console.log(this.data.href)
+                });
+            }
+        });
+    </script>
+
+</head>
+
+<body>
+    <div id="loading_screen" style="top: 50%; left: 50%; transform: translate(-50%, -50%); position: fixed; font-size: 4em; text-align: center;"></div>
+    <div id="scene_wrapper" style="opacity: 0;">
+        <a-scene loading-screen="enabled:false" stats>
+            <!-- assets management system -->
+            <a-assets>
+                <a-asset-item id="room-glb" src="assets/models/roomlights.glb"></a-asset-item>
+                <a-asset-item id="navmesh-gltf" src="assets/models/navmesh1.gltf"></a-asset-item>
+            </a-assets>
+
+            <!-- basic movement  -->
+            <a-entity id="cameraRig" movement-controls="constrainToNavMesh: true;" position="0 0 0" rotation="0 0 0">
+                <!-- camera -->
+                <a-entity id="head" camera="fov: 80; active: true" position="0 1.6 0"
+                          look-controls="pointerLockEnabled: true; reverseMouseDrag: false">
+                    <a-entity id="cursor" cursor raycaster="far: 10; objects: .clickable"
+                              material="color: white; shader: standard" position="0 0 -0.3"
+                              geometry="primitive: sphere; radius: 0.001">
+                    </a-entity>
+                </a-entity>
+            </a-entity>
+
+            <!-- lights  -->
+            <!-- ambient light  -->
+            <a-entity light="type: ambient; intensity: 0; color:  #FFFFFF; shadowCameraVisible: false;"></a-entity>
+            <!-- table lights  -->
+            <a-entity light="type:point; color:  #FFFFFF; intensity: 1; distance: 10; decay: 1;" position="3 3 0">
+            </a-entity>
+            <a-entity light="type:point; color:  #FFFFFF; intensity: 1; distance: 10; castShadow: false; decay: 1"
+                      position="-2.5 3 4.6">
+            </a-entity>
+            <a-entity light="type:point; color:  #FFFFFF; intensity: 1; distance: 10; castShadow: false; decay: 1"
+                      position="-2.5 3 -4.6">
+            </a-entity>
+            <a-entity light="type:point; color:  #FFFFFF; intensity: 1; distance: 10; castShadow: false; decay: 1"
+                      position="8.7 3 4.6">
+            </a-entity>
+            <a-entity light="type:point; color:  #FFFFFF; intensity: 1; distance: 10; castShadow: false; decay: 1"
+                      position="8.7 3 -4.6">
+            </a-entity>
+            <!-- statue light -->
+            <a-entity light="type:spot; angle: 90; color:  #CC88FF; intensity: 1; distance: 50; decay: 1; "
+                      rotation="-90 0 0" position="-9 5.5 0">
+            </a-entity>
+
+            <!-- models  -->
+            <!-- room  -->
+            <a-entity id="room" class="model" gltf-model="#room-glb"
+                      material="roughness: 70; metalness: 0; shader: standard">
+            </a-entity>
+            <!-- nav-mesh: protecting us from running thru walls  -->
+            <a-entity id="navmesh" class="model" gltf-model="#navmesh-gltf" nav-mesh visible="false">
+            </a-entity>
+
+            <!-- big screen  -->
+            <a-plane width="6.4" height="3.5" rotation="0 180 0" material="shader: standard;" position="3 2.4 7.4"
+                     color="#111122">
+                <!-- news  -->
+                <a-plane id="news" color="#AAAABB" material="shader: standard;" width="2.15" height="1.7"
+                         position="-2.15 0.85 0.01">
+                    <!-- title  -->
+                    <a-text rotation="0 0 0" width="2.05" value="NEWS" position="-1.075 0.65 0.01" x-offset="0.05"
+                            wrap-count="21.5"></a-text>
+                    <!-- arrows  -->
+                    <a-plane text="value: up; wrap-count: 6; align: center" width=".15" height=".15" id="scroll_news_up"
+                             class="clickable nocollision" material="shader: standard;" color="#9999AA"
+                             position="0.95 -0.5 0.01">
+                    </a-plane>
+                    <a-plane text="value: down; wrap-count: 6; align: center" width=".15" height=".15"
+                             id="scroll_news_down" class="clickable nocollision" material="shader: standard;"
+                             color="#9999AA" position="0.95 -0.7 0.01">
+                    </a-plane>
+                </a-plane>
+                <!-- events  -->
+                <a-plane id="events" color="#9999AA" material="shader: standard;" width="2.15" height="1.7"
+                         position="-2.15 -0.85 0.01">
+                    <!-- title  -->
+                    <a-text rotation="0 0 0" width="2.05" value="EVENTS" position="-1.075 0.65 0.01" x-offset="0.05"
+                            wrap-count="21.5"></a-text>
+                    <!-- arrows  -->
+                    <a-plane text="value: left; wrap-count: 6; align: center" width=".15" height=".15"
+                             id="scroll_events_left" class="clickable nocollision" material="shader: standard;"
+                             color="#888899" position="0.75 -0.7 0.01">
+                    </a-plane>
+                    <a-plane text="value: right; wrap-count: 6; align: center" width=".15" height=".15"
+                             id="scroll_events_right" class="clickable nocollision" material="shader: standard;"
+                             color="#888899" position="0.95 -0.7 0.01">
+                    </a-plane>
+                </a-plane>
+                <!-- proposals  -->
+                <a-plane id="proposals" color="#888899" material="shader: standard;" width="2.15" height="3.4"
+                         position="0 0 0.01">
+                    <!-- title  -->
+                    <a-text id="proposals" width="2.05" rotation="0 0 0" value="PROPOSALS" position="-1.075 1.5 0.01"
+                            x-offset="0.05" wrap-count="21.5"></a-text>
+                    <!-- filters, might be dinamically generated in near future  -->
+                    <a-plane text="value: all; wrap-count: 6; align: center" width=".3" height=".15" id="all"
+                             class="filter_proposals clickable nocollision" material="shader: standard;" color="#777788"
+                             position="-0.8 1.25 0.01">
+                    </a-plane>
+                    <a-plane text="value: a; wrap-count: 6; align: center" width=".3" height=".15" id="alfabeto"
+                             class="filter_proposals clickable nocollision" material="shader: standard;" color="#777788"
+                             position="-0.4 1.25 0.01">
+                    </a-plane>
+                    <a-plane text="value: b; wrap-count: 6; align: center" width=".3" height=".15" id="b"
+                             class="filter_proposals clickable nocollision" material="shader: standard;" color="#777788"
+                             position="0 1.25 0.01">
+                    </a-plane>
+                    <!-- arrows  -->
+                    <a-plane text="value: up; wrap-count: 6; align: center" width=".15" height=".15"
+                             id="scroll_proposals_up" class="clickable nocollision" material="shader: standard;"
+                             color="#777788" position="0.95 -1.35 0.01">
+                    </a-plane>
+                    <a-plane text="value: down; wrap-count: 6; align: center" width=".15" height=".15"
+                             id="scroll_proposals_down" class="clickable nocollision" material="shader: standard;"
+                             color="#777788" position="0.95 -1.55 0.01">
+                    </a-plane>
+                </a-plane>
+                <!-- other daos  -->
+                <a-plane color="#777788" material="shader: standard;" width="2.15" height="3.4" position="2.15 0 0.01">
+                    <!-- title  -->
+                    <a-text rotation="0 0 0" width="2.05" value="What's new in other DAOs" position="-1.075 1.5 0.01"
+                            x-offset="0.05" wrap-count="21.5"></a-text>
+                </a-plane>
+            </a-plane>
+
+            <!-- average screen left  -->
+            <a-plane width="3" height="3.5" rotation="0 0 0" material="shader: standard;" position="1.3 2.4 -7.4"
+                     color="#EEEEFF">
+                <!-- title  -->
+                <a-text align="center" rotation="0 0 0" width="2.9" value="TREASURY" position="0 1.6 0.01"
+                        x-offset="0.05" wrap-count="30" color="#884499"></a-text>
+
+                <a-plane id="tokens" color="#AAAABB" material="shader: standard;" width="3" height="0.8"
+                         position="0 1.1 0.01">
+                    <!-- title  -->
+                    <a-text rotation="0 0 0" width="1.4" value="TOKENS" position="-1.5 0.3 0.01" x-offset="0.05"
+                            wrap-count="15"></a-text>
+                    <a-plane text="value: left; wrap-count: 6; align: center" width=".15" height=".15"
+                             id="scroll_tokens_left" class="clickable nocollision" material="shader: standard;"
+                             color="#9999AA" position="1.15 -0.3 0.01">
+                    </a-plane>
+                    <a-plane text="value: right; wrap-count: 6; align: center" width=".15" height=".15"
+                             id="scroll_tokens_right" class="clickable nocollision" material="shader: standard;"
+                             color="#9999AA" position="1.35 -0.3 0.01">
+                    </a-plane>
+                </a-plane>
+
+                <a-plane id="nfts" color="#9999AA" material="shader: standard;" width="3" height="1.2"
+                         position="0 0.1 0.01">
+                    <!-- title  -->
+                    <a-text rotation="0 0 0" width="2.9" value="NFTs" position="-1.5 0.5 0.01" x-offset="0.05"
+                            wrap-count="30"></a-text>
+                    <a-plane text="value: left; wrap-count: 6; align: center" width=".15" height=".15"
+                             id="scroll_nfts_left" class="clickable nocollision" material="shader: standard;"
+                             color="#888899" position="1.15 -0.5 0.01">
+                    </a-plane>
+                    <a-plane text="value: right; wrap-count: 6; align: center" width=".15" height=".15"
+                             id="scroll_nfts_right" class="clickable nocollision" material="shader: standard;"
+                             color="#888899" position="1.35 -0.5 0.01">
+                    </a-plane>
+                </a-plane>
+
+                <a-plane id="cashin" color="#888899" material="shader: standard;" width="1.5" height="1.25"
+                         position="-0.75 -1.125 0.01">
+                    <!-- title  -->
+                    <a-text rotation="0 0 0" width="0.7" value="CASH IN" position="-0.75 0.5 0.01" x-offset="0.05"
+                            wrap-count="10"></a-text>
+                    <a-plane text="value: up; wrap-count: 6; align: center" width=".15" height=".15"
+                             id="scroll_cashin_up" class="clickable nocollision" material="shader: standard;"
+                             color="#777788" position="0.6 -0.25 0.01">
+                    </a-plane>
+                    <a-plane text="value: down; wrap-count: 6; align: center" width=".15" height=".15"
+                             id="scroll_cashin_down" class="clickable nocollision" material="shader: standard;"
+                             color="#777788" position="0.6 -0.45 0.01">
+                    </a-plane>
+                </a-plane>
+
+                <a-plane id="cashout" color="#777788" material="shader: standard;" width="1.5" height="1.25"
+                         position="0.75 -1.125 0.01">
+                    <!-- title  -->
+                    <a-text rotation="0 0 0" width="0.7" value="CASH OUT" position="-0.75 0.5 0.01" x-offset="0.05"
+                            wrap-count="10"></a-text>
+                    <a-plane text="value: up; wrap-count: 6; align: center" width=".15" height=".15"
+                             id="scroll_cashout_up" class="clickable nocollision" material="shader: standard;"
+                             color="#666677" position="0.6 -0.25 0.01">
+                    </a-plane>
+                    <a-plane text="value: down; wrap-count: 6; align: center" width=".15" height=".15"
+                             id="scroll_cashout_down" class="clickable nocollision" material="shader: standard;"
+                             color="#666677" position="0.6 -0.45 0.01">
+                    </a-plane>
+                </a-plane>
+            </a-plane>
+
+            <!-- average screen right -->
+            <a-plane width="3" height="3.5" rotation="0 0 0" material="shader: standard;" position="4.7 2.4 -7.4"
+                     color="#111122">
+
+                <a-plane id="members" color="#AAAABB" material="shader: standard;" width="3" height="0.8"
+                         position="0 1.35> 0.01">
+                    <!-- title  -->
+                    <a-text rotation="0 0 0" width="1.4" value="MEMBERS" position="-1.5 0.3 0.01" x-offset="0.05"
+                            wrap-count="15"></a-text>
+                    <!--member categories, might be dinamically generated in near future-->
+                    <a-plane width=".6" height=".3" id="all" class="clickable nocollision" material="shader: standard;"
+                             color="#777788" position="-1.05 0 0.01">
+                        <a-text rotation="0 0 0" width=".5" value="DEVs" position="-0.3 0.05 0.01" x-offset="0.05"
+                                wrap-count="10"></a-text>
+                        <a-text rotation="0 0 0" width=".5" value="341" position="-0.3 -0.05 0.01" x-offset="0.05"
+                                wrap-count="10"></a-text>
+                    </a-plane>
+                    <a-plane width=".6" height=".3" id="alfabeto" class="clickable nocollision"
+                             material="shader: standard;" color="#777788" position="-0.35 0 0.01">
+                        <a-text rotation="0 0 0" width=".5" value="ARTISTS" position="-0.3 0.05 0.01" x-offset="0.05"
+                                wrap-count="10"></a-text>
+                        <a-text rotation="0 0 0" width=".5" value="1041" position="-0.3 -0.05 0.01" x-offset="0.05"
+                                wrap-count="10"></a-text>
+                    </a-plane>
+                    <a-plane width=".6" height=".3" id="b" class="clickable nocollision" material="shader: standard;"
+                             color="#777788" position="0.35 0 0.01">
+                        <a-text rotation="0 0 0" width=".5" value="OG" position="-0.3 0.05 0.01" x-offset="0.05"
+                                wrap-count="10"></a-text>
+                        <a-text rotation="0 0 0" width=".5" value="1241" position="-0.3 -0.05 0.01" x-offset="0.05"
+                                wrap-count="10"></a-text>
+                    </a-plane>
+                    <a-plane width=".6" height=".3" id="all" class="clickable nocollision" material="shader: standard;"
+                             color="#777788" position="1.05 0 0.01">
+                        <a-text rotation="0 0 0" width=".5" value="OTHERS" position="-0.3 0.05 0.01" x-offset="0.05"
+                                wrap-count="10"></a-text>
+                        <a-text rotation="0 0 0" width=".5" value="1326" position="-0.3 -0.05 0.01" x-offset="0.05"
+                                wrap-count="10"></a-text>
+                    </a-plane>
+                </a-plane>
+                <a-plane id="todo" color="#9999AA" material="shader: standard;" width="3" height="1.9"
+                         position="0 0 0.01">
+                    <!-- title -->
+                    <a-text rotation="0 0 0" width="2.9" value="TODO" position="-1.5 0.85 0.01" x-offset="0.05"
+                            wrap-count="30"></a-text>
+                    <!-- filters, might be dinamically generated in near future  -->
+                    <a-plane text="value: all; wrap-count: 10; align: center" width=".3" height=".15" id="all"
+                             class="filter_todo clickable nocollision" material="shader: standard;" color="#777788"
+                             position="-0.8 0.65 0.01">
+                    </a-plane>
+                    <a-plane text="value: DEVs; wrap-count: 10; align: center" width=".3" height=".15" id="devs"
+                             class="filter_todo clickable nocollision" material="shader: standard;" color="#777788"
+                             position="-0.4 0.65 0.01">
+                    </a-plane>
+                    <a-plane text="value: ARTISTS; wrap-count: 10; align: center" width=".3" height=".15" id="artists"
+                             class="filter_todo clickable nocollision" material="shader: standard;" color="#777788"
+                             position="0 0.65 0.01">
+                    </a-plane>
+                    <a-plane text="value: OG; wrap-count: 10; align: center" width=".3" height=".15" id="og"
+                             class="filter_todo clickable nocollision" material="shader: standard;" color="#777788"
+                             position="0.4 0.65 0.01">
+                    </a-plane>
+                    <a-plane text="value: OTHERS; wrap-count: 10; align: center" width=".3" height=".15" id="others"
+                             class="filter_todo clickable nocollision" material="shader: standard;" color="#777788"
+                             position="0.8 0.65 0.01">
+                    </a-plane>
+                    <!-- arrows  -->
+                    <a-plane text="value: up; wrap-count: 6; align: center" width=".15" height=".15" id="scroll_todo_up"
+                             class="clickable nocollision" material="shader: standard;" color="#888899"
+                             position="1.35 -0.65 0.01">
+                    </a-plane>
+                    <a-plane text="value: down; wrap-count: 6; align: center" width=".15" height=".15"
+                             id="scroll_todo_down" class="clickable nocollision" material="shader: standard;"
+                             color="#888899" position="1.35 -0.85 0.01">
+                    </a-plane>
+                </a-plane>
+
+                <a-plane id="talents" color="#888899" material="shader: standard;" width="3" height="0.8"
+                         position="0 -1.35 0.01">
+                    <!-- title -->
+                    <a-text rotation="0 0 0" width="2.9" value="RAISING TALENTS" position="-1.5 0.3 0.01"
+                            x-offset="0.05" wrap-count="30"></a-text>
+                    </a-plane>
+                </a-plane>
+            </a-plane>
+
+        </a-scene>
+    </div>
+</body>
+<!-- importing custom scripts  -->
+<script src="scripts/custom/utils.js"></script>
+<!--<script src="scripts/custom/big_screen.js"></script>-->
+<script src="scripts/custom/average_screen_left.js"></script>
+<!--<script src="scripts/custom/average_screen_right.js"></script>-->
+<script>
+    //acquiring sceneEL
+    var sceneEl = document.querySelector('a-scene');
+    var scene_wrapperEl = document.getElementById('scene_wrapper');
+    var loading_screenEl = document.getElementById('loading_screen');
+    var bodyEl = document.querySelector('body');
+    var models = [];
+    var models_number;
+    var models_loaded = 0;
+    //basically builds all of the dinamic content
+    function build_dynamic_content() {
+        //start_big_screen();
+        start_average_screen_left();
+        //start_average_screen_right();
+    }
+    //checks if scene has loaded befor building all of the dinamic content
+    function check_scene() {
+        if (sceneEl.hasLoaded) {
+            start_scene()
+        } else {
+            sceneEl.addEventListener('loaded', start_scene);
+        }
+    }
+    //updates loading screen based on models actually loaded
+    function update_loading_screen() {
+        models_loaded += 1;
+        loading_screenEl.innerHTML = "models loaded: " + models_loaded + " / " + models_number;
+        if (models_loaded == models_number) {
+            scene_wrapperEl.removeAttribute("style");
+        };
+    }
+    //checks if model has loaded before building all of the dinamic content
+    function start_loading_screen_listeners() {
+        models = document.getElementsByClassName("model");
+        models_number = models.length;
+        loading_screenEl.innerHTML = "models loaded: 0 / " + models_number;
+        for (i = 0; i < models_number; i++) {
+            models[i].addEventListener("model-loaded", update_loading_screen)
+        }
+    }
+    function start_scene() {
+        build_dynamic_content();
+        start_loading_screen_listeners();
+    }
+    start_scene();
+</script>
+
+
+</html>
