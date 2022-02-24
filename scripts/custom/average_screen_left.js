@@ -8,25 +8,29 @@ let tokens_array = [
         "title": "anything",
         "tokens_itemId": "P1",
         "name": "Solana",
-        "amount": "12500"
+        "amount": "12500",
+        "image": "assets/images/try.png"
     },
     {
         "title": "anything",
         "tokens_itemId": "P2",
         "name": "Ethereum",
-        "amount": "12"
+        "amount": "12",
+        "image": "assets/images/try.png"
     },
     {
         "title": "anything",
         "tokens_itemId": "P1",
         "name": "Bitcoin",
-        "amount": "10"
+        "amount": "10",
+        "image": "assets/images/try.png"
     },
     {
         "title": "anything",
         "tokens_itemId": "P2",
         "name": "Dodgecoin",
-        "amount": "2400"
+        "amount": "2400",
+        "image": "assets/images/try.png"
     }
 ]
 function build_tokens() {
@@ -48,20 +52,27 @@ function build_tokens() {
         var tokens_item_nameEL = document.createElement('a-text');
         tokens_itemEL.appendChild(tokens_item_nameEL);
         tokens_item_nameEL.setAttribute('value', tokens_item.name + ":");
-        tokens_item_nameEL.setAttribute('wrap-count', 15);
+        tokens_item_nameEL.setAttribute('wrap-count', 10);
         tokens_item_nameEL.setAttribute('baseline', "top");
         tokens_item_nameEL.setAttribute('x-offset', 0.05);
-        tokens_item_nameEL.setAttribute("width", 0.7);
-        tokens_item_nameEL.setAttribute('position', { x: -0.4, y: 0.1, z: 0.01 });
+        tokens_item_nameEL.setAttribute("width", 0.5);
+        tokens_item_nameEL.setAttribute('position', { x: -0.2, y: 0.1, z: 0.01 });
 
         var tokens_item_amountEL = document.createElement('a-text');
         tokens_itemEL.appendChild(tokens_item_amountEL);
         tokens_item_amountEL.setAttribute('value', tokens_item.amount);
-        tokens_item_amountEL.setAttribute('wrap-count', 10);
+        tokens_item_amountEL.setAttribute('wrap-count', 8);
         tokens_item_amountEL.setAttribute('baseline', "top");
         tokens_item_amountEL.setAttribute('x-offset', 0.05);
-        tokens_item_amountEL.setAttribute("width", 0.7);
-        tokens_item_amountEL.setAttribute('position', { x: -0.4, y: -0.025, z: 0.01 });
+        tokens_item_amountEL.setAttribute("width", 0.5);
+        tokens_item_amountEL.setAttribute('position', { x: -0.2, y: -0.025, z: 0.01 });
+
+        var tokens_item_imageEL = document.createElement('a-image');
+        tokens_itemEL.appendChild(tokens_item_imageEL);
+        tokens_item_imageEL.setAttribute('src', tokens_item.image);
+        tokens_item_imageEL.setAttribute("width", 0.2);
+        tokens_item_imageEL.setAttribute("height", 0.2);
+        tokens_item_imageEL.setAttribute('position', { x: -0.25, y: 0, z: 0.01 });
 
         tokens_total += parseInt(tokens_item.amount);
     }
