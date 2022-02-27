@@ -34,12 +34,15 @@
 </head>
 
 <body>
-    <div id="loading_screen" style="top: 50%; left: 50%; transform: translate(-50%, -50%); position: fixed; font-size: 4em; text-align: center;"></div>
+    <div id="loading_screen"
+         style="top: 50%; left: 50%; transform: translate(-50%, -50%); position: fixed; font-size: 4em; text-align: center;">
+    </div>
     <div id="scene_wrapper" style="opacity: 0;">
         <a-scene loading-screen="enabled:false" stats>
             <!-- assets management system -->
             <a-assets>
                 <a-asset-item id="room-glb" src="assets/models/roomlights.glb"></a-asset-item>
+                <a-asset-item id="globe-glb" src="assets/models/Hologram_sphere.glb"></a-asset-item>
                 <a-asset-item id="navmesh-gltf" src="assets/models/navmesh1.gltf"></a-asset-item>
             </a-assets>
 
@@ -49,7 +52,7 @@
                 <a-entity id="head" camera="fov: 80; active: true" position="0 1.6 0"
                           look-controls="pointerLockEnabled: true; reverseMouseDrag: false">
                     <a-entity id="cursor" cursor raycaster="far: 10; objects: .clickable"
-                              material="color: white; shader: standard" position="0 0 -0.3"
+                              material="color: white; shader: flat" position="0 0 -0.3"
                               geometry="primitive: sphere; radius: 0.001">
                     </a-entity>
                 </a-entity>
@@ -73,15 +76,26 @@
             <a-entity light="type:point; color:  #FFFFFF; intensity: 1; distance: 10; castShadow: false; decay: 1"
                       position="8.7 3 -4.6">
             </a-entity>
-            <!-- statue light -->
-            <a-entity light="type:spot; angle: 90; color:  #CC88FF; intensity: 1; distance: 50; decay: 1; "
-                      rotation="-90 0 0" position="-9 5.5 0">
+            <!-- statue lights -->
+            <a-entity light="type:spot; angle: 90; color:  #DDAAFF; intensity: 1; distance: 50; decay: 1; "
+                      rotation="-90 0 0" position="-12 5.5 0">
+            </a-entity>
+            <a-entity light="type:spot; angle: 90; color:  #DDAAFF; intensity: 1; distance: 10; decay: 1; "
+                      rotation="-90 0 0" position="-8 5.5 0">
+            </a-entity>
+            <a-entity light="type:spot; angle: 90; color:  #DDAAFF; intensity: 1; distance: 50; decay: 1; "
+                      rotation="-90 0 0" position="14 5.5 0">
             </a-entity>
 
             <!-- models  -->
             <!-- room  -->
             <a-entity id="room" class="model" gltf-model="#room-glb"
                       material="roughness: 70; metalness: 0; shader: standard">
+            </a-entity>
+            <!-- globe  -->
+            <a-entity id="globe" class="model" gltf-model="#globe-glb"
+                      material="roughness: 70; metalness: 0; shader: standard"
+                      animation__spin="property: rotation; dur: 12000; loop: true; to: 0 360 0;" position="3 1.5 0">
             </a-entity>
             <!-- nav-mesh: protecting us from running thru walls  -->
             <a-entity id="navmesh" class="model" gltf-model="#navmesh-gltf" nav-mesh visible="false">
@@ -308,8 +322,22 @@
                     <!-- title -->
                     <a-text rotation="0 0 0" width="2.9" value="RAISING TALENTS" position="-1.5 0.3 0.01"
                             x-offset="0.05" wrap-count="30"></a-text>
-                    </a-plane>
                 </a-plane>
+            </a-plane>
+            <!-- tiny screen right -->
+            <a-plane position="-13.21 2.75 4.33" width="1.5" height="1.75" rotation="0 133.25 0"
+                     material="shader: standard;" color="#111122">
+                <a-image width="1.5" height="1.75" position="0 0 0.01" src="assets\images\ffc2b2a0-614a-4359-b164-68c5b9f4396d.jpg"></a-image>
+            </a-plane>
+            <!-- tiny screen left -->
+            <a-plane position="-13.22 2.75 -4.3" width="1.5" height="1.75" rotation="0 46.75 0"
+                     material="shader: standard;" color="#111122">
+                <a-image width="1.5" height="1.75" position="0 0 0.01" src="assets/images/media_FKNOb38VgAkOruy.jpg"></a-image>
+            </a-plane>
+            <!-- tiny screen center -->
+            <a-plane position="-14.445 2.75 0" width="1.5" height="1.75" rotation="0 90 0" material="shader: standard;"
+                     color="#111122">
+                <a-image width="1.5" height="1.75" position="0 0 0.01" src="assets/images/download.png"></a-image>
             </a-plane>
 
         </a-scene>
@@ -317,9 +345,9 @@
 </body>
 <!-- importing custom scripts  -->
 <script src="scripts/custom/utils.js"></script>
-<!--<script src="scripts/custom/big_screen.js"></script>-->
+<script src="scripts/custom/big_screen.js"></script>
 <script src="scripts/custom/average_screen_left.js"></script>
-<!--<script src="scripts/custom/average_screen_right.js"></script>-->
+<script src="scripts/custom/average_screen_right.js"></script>
 <script>
     //acquiring sceneEL
     var sceneEl = document.querySelector('a-scene');
@@ -331,9 +359,9 @@
     var models_loaded = 0;
     //basically builds all of the dinamic content
     function build_dynamic_content() {
-        //start_big_screen();
+        start_big_screen();
         start_average_screen_left();
-        //start_average_screen_right();
+        start_average_screen_right();
     }
     //checks if scene has loaded befor building all of the dinamic content
     function check_scene() {
