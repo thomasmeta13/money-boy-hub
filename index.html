@@ -35,7 +35,12 @@
 
 <body>
     <div id="loading_screen"
-         style="top: 50%; left: 50%; transform: translate(-50%, -50%); position: fixed; font-size: 4em; text-align: center;">
+         style="padding-top: 30%; height: 100%; width: 100%; background-color: #9944BB; top: 50%; left: 50%; transform: translate(-50%, -50%); position: fixed;">
+        <div id="loading_text"
+             style="font-family: monospace; color: #44FFFF; width: 80vw; font-size: 4em; text-align: center; margin:auto">
+        </div>
+        <div id="loading_bar" style="height: 14px; width: 80vw; margin:auto; border: solid 2px #44FFFF;">
+        </div>
     </div>
     <div id="scene_wrapper" style="opacity: 0;">
         <a-scene loading-screen="enabled:false" stats>
@@ -322,24 +327,55 @@
                     <!-- title -->
                     <a-text rotation="0 0 0" width="2.9" value="RAISING TALENTS" position="-1.5 0.3 0.01"
                             x-offset="0.05" wrap-count="30"></a-text>
+                    <a-plane width="0.9" height=".5" class="clickable nocollision" material="shader: standard;"
+                             color="#777788" position="-0.95 -0.05 0.01">
+                        <a-image src="assets/images/try.png" position="-0.2 0 0.01" height=".4" width=".4"></a-image>
+                        <a-text rotation="0 0 0" width=".4" value="zZMARKZzgfue" position="-0.05 0.1 0.01"
+                                x-offset="0.05" wrap-count="10"></a-text>
+                        <a-text rotation="0 0 0" width=".4" value="PRIZE:" position="-0.05 -0.05 0.01" x-offset="0.05"
+                                wrap-count="10"></a-text>
+                        <a-text rotation="0 0 0" width=".4" value="0.23 ETH" position="-0.05 -0.15 0.01" x-offset="0.05"
+                                wrap-count="10"></a-text>
+                    </a-plane>
+                    <a-plane width="0.9" height=".5" class="clickable nocollision" material="shader: standard;"
+                             color="#777788" position="0 -0.05 0.01">
+                        <a-image src="assets/images/try.png" position="-0.2 0 0.01" height=".4" width=".4"></a-image>
+                        <a-text rotation="0 0 0" width=".4" value="Thomasmeta" position="-0.05 0.1 0.01"
+                                x-offset="0.05" wrap-count="10"></a-text>
+                        <a-text rotation="0 0 0" width=".4" value="PRIZE:" position="-0.05 -0.05 0.01" x-offset="0.05"
+                                wrap-count="10"></a-text>
+                        <a-text rotation="0 0 0" width=".4" value="0.23 ETH" position="-0.05 -0.15 0.01" x-offset="0.05"
+                                wrap-count="10"></a-text>
+                    </a-plane>
+                    <a-plane width="0.9" height=".5" class="clickable nocollision" material="shader: standard;"
+                             color="#777788" position="0.95 -0.05 0.01">
+                        <a-image src="assets/images/try.png" position="-0.2 0 0.01" height=".4" width=".4"></a-image>
+                        <a-text rotation="0 0 0" width=".4" value="William Mctriumph" position="-0.05 0.1 0.01"
+                                x-offset="0.05" wrap-count="10"></a-text>
+                        <a-text rotation="0 0 0" width=".4" value="PRIZE:" position="-0.05 -0.05 0.01" x-offset="0.05"
+                                wrap-count="10"></a-text>
+                        <a-text rotation="0 0 0" width=".4" value="0.23 ETH" position="-0.05 -0.15 0.01" x-offset="0.05"
+                                wrap-count="10"></a-text>
+                    </a-plane>
                 </a-plane>
             </a-plane>
             <!-- tiny screen right -->
             <a-plane position="-13.21 2.75 4.33" width="1.5" height="1.75" rotation="0 133.25 0"
                      material="shader: standard;" color="#111122">
-                <a-image width="1.5" height="1.75" position="0 0 0.01" src="assets\images\ffc2b2a0-614a-4359-b164-68c5b9f4396d.jpg"></a-image>
+                <a-image width="1.5" height="1.75" position="0 0 0.01"
+                         src="assets\images\ffc2b2a0-614a-4359-b164-68c5b9f4396d.jpg"></a-image>
             </a-plane>
             <!-- tiny screen left -->
             <a-plane position="-13.22 2.75 -4.3" width="1.5" height="1.75" rotation="0 46.75 0"
                      material="shader: standard;" color="#111122">
-                <a-image width="1.5" height="1.75" position="0 0 0.01" src="assets/images/media_FKNOb38VgAkOruy.jpg"></a-image>
+                <a-image width="1.5" height="1.75" position="0 0 0.01" src="assets/images/media_FKNOb38VgAkOruy.jpg">
+                </a-image>
             </a-plane>
             <!-- tiny screen center -->
             <a-plane position="-14.445 2.75 0" width="1.5" height="1.75" rotation="0 90 0" material="shader: standard;"
                      color="#111122">
                 <a-image width="1.5" height="1.75" position="0 0 0.01" src="assets/images/download.png"></a-image>
             </a-plane>
-
         </a-scene>
     </div>
 </body>
@@ -353,6 +389,9 @@
     var sceneEl = document.querySelector('a-scene');
     var scene_wrapperEl = document.getElementById('scene_wrapper');
     var loading_screenEl = document.getElementById('loading_screen');
+    var loading_textEl = document.getElementById('loading_text');
+    var loading_barEl = document.getElementById('loading_bar');
+
     var bodyEl = document.querySelector('body');
     var models = [];
     var models_number;
@@ -374,7 +413,8 @@
     //updates loading screen based on models actually loaded
     function update_loading_screen() {
         models_loaded += 1;
-        loading_screenEl.innerHTML = "models loaded: " + models_loaded + " / " + models_number;
+        loading_textEl.innerHTML = "MODELS LOADED: " + models_loaded + " / " + models_number;
+        loading_barEl.innerHTML += "<div style='display: inline-block; border: solid 2px #9944BB; width:" + (80 / models_number) + "vw; height: 10px; background-color: #44FFFF'></div>"
         if (models_loaded == models_number) {
             scene_wrapperEl.removeAttribute("style");
         };
@@ -383,7 +423,7 @@
     function start_loading_screen_listeners() {
         models = document.getElementsByClassName("model");
         models_number = models.length;
-        loading_screenEl.innerHTML = "models loaded: 0 / " + models_number;
+        loading_textEl.innerHTML = "MODELS LOADED: 0 / " + models_number;
         for (i = 0; i < models_number; i++) {
             models[i].addEventListener("model-loaded", update_loading_screen)
         }
