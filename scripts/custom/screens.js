@@ -22,6 +22,16 @@ let twitter_array = [
     {
         "title": "twit4",
         "twitter_itemId": "4",
+        "content": "Mauris euismod, purus nec porta commodo, mi felis luctus purus, sit amet euismod nunc urna eget lorem. Curabitur risus tortor, ultricies sit amet tellus a, tristique mattis nisl. Suspendisse in eleifend odio. Nunc justo sem, fringilla at ornare eu, blandit at ante. Donec eget vulputate ligula. "
+    },
+    {
+        "title": "twit5",
+        "twitter_itemId": "5",
+        "content": "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed vehicula varius aliquet. Suspendisse nibh metus, tempus eu quam eu, pharetra viverra tellus."
+    },
+    {
+        "title": "twit6",
+        "twitter_itemId": "6",
         "content": "Hakuna matata"
     }
 ]
