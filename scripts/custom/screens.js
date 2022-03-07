@@ -46,7 +46,7 @@ function build_twitter() {
         twitter_itemEL.setAttribute('id', "'" + twitter_item.twitter_itemId + "'");
         twitter_itemEL.setAttribute('width', 2.8);
         twitter_itemEL.setAttribute('height', 0.7);
-        twitter_itemEL.setAttribute('color', "#AA22BB");
+        twitter_itemEL.setAttribute('color', "#AA44BB");
         twitter_itemEL.setAttribute('material', "shader: flat");
 
         var twitter_item_titleEL = document.createElement('a-text');
@@ -107,19 +107,19 @@ function build_nft() {
     var nft_item_amountEL = document.createElement('a-text');
     nft_containerEl.appendChild(nft_item_amountEL);
     nft_item_amountEL.setAttribute('value', nft.price);
-    nft_item_amountEL.setAttribute('wrap-count', 8);
+    nft_item_amountEL.setAttribute('wrap-count', 20);
     nft_item_amountEL.setAttribute('baseline', "top");
     nft_item_amountEL.setAttribute('x-offset', 0.05);
     nft_item_amountEL.setAttribute("width", 3);
     nft_item_amountEL.setAttribute("align", "center");
-    nft_item_amountEL.setAttribute('position', { x: 0, y: -1, z: 0.01 });
+    nft_item_amountEL.setAttribute('position', { x: 0, y: -1.5, z: 0.01 });
 
     var nft_item_imageEL = document.createElement('a-image');
     nft_containerEl.appendChild(nft_item_imageEL);
     nft_item_imageEL.setAttribute('src', nft.image);
-    nft_item_imageEL.setAttribute("width", 2);
-    nft_item_imageEL.setAttribute("height", 2);
-    nft_item_imageEL.setAttribute('position', { x: 0, y: 0.5, z: 0.01 });
+    nft_item_imageEL.setAttribute("width", 3);
+    nft_item_imageEL.setAttribute("height", 3);
+    nft_item_imageEL.setAttribute('position', { x: 0, y: 0.25, z: 0.01 });
     build_nft_listeners();
 }
 
