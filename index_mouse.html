@@ -139,7 +139,12 @@
         </div>
     </div>
     <div id="scene_wrapper" style="opacity: 0;">
-        <a-scene loading-screen="enabled:false" stats>
+        <a-scene renderer="antialias: true;
+        colorManagement: true;
+        sortObjects: true;
+        physicallyCorrectLights: true;
+        maxCanvasWidth: 1920;
+        maxCanvasHeight: 1920;" loading-screen="enabled:false" stats>
             <!-- assets management system -->
             <a-assets>
                 <a-asset-item id="room-glb" src="assets/models/roomlights.glb"></a-asset-item>
@@ -180,6 +185,19 @@
                       position="8.7 3 -4.6">
             </a-entity>
             <!-- statue lights -->
+            <a-entity light="type:spot; angle: 80; color:  #DDAAFF; intensity: 5; distance: 6; decay: 1;"
+                      rotation="0 90 0" position="-5 5.5 0">
+            </a-entity>
+            <a-entity light="type:spot; angle: 80; color:  #DDAAFF; intensity: 5; distance: 6; decay: 1;"
+                      rotation="0 -90 0" position="-13 5.5 0">
+            </a-entity>
+            <a-entity light="type:spot; angle: 80; color:  #DDAAFF; intensity: 5; distance: 6; decay: 1;"
+                      rotation="0 0 0" position="-9 5.5 4">
+            </a-entity>
+            <a-entity light="type:spot; angle: 80; color:  #DDAAFF; intensity: 5; distance: 6; decay: 1;"
+                      rotation="0 180 0" position="-9 5.5 -4">
+            </a-entity>
+
             <a-entity light="type:spot; angle: 90; color:  #DDAAFF; intensity: 1; distance: 50; decay: 1; "
                       rotation="-90 0 0" position="-12 5.5 0">
             </a-entity>
@@ -251,7 +269,7 @@
 
             <!-- models  -->
             <!-- room  -->
-            <a-entity id="room" class="model" gltf-model="#room-glb"
+            <a-entity shadow="cast: true; receive: true"  id="room" class="model" gltf-model="#room-glb"
                       material="roughness: 70; metalness: 0; shader: standard">
             </a-entity>
             <!-- globe  -->
