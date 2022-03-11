@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>Solarity</title>
+    <title>Hub</title>
     <meta name="description"
           content="Advanced Hello World, WebXR! A-frame provides a hello world that is really remarkable, however you usually need to have controller selection and environment with movement.  With this example you get what works across the most headsets and controllers.">
     <meta name="viewport"
@@ -68,6 +68,7 @@
 
                 <a-asset-item id="navmesh-gltf" src="assets/models/navmesh4.gltf"></a-asset-item>
                 <img id="try-img" src="assets/images/japan.png">
+                <img id="gallery-img" src="assets/images/gallery.png">
 
             </a-assets>
 
@@ -174,7 +175,7 @@
             </a-plane>
             <!-- portals -->
             <a-image width="1.3" height="1.9" class="clickable nocollision" simple-link="href: ../gallery/gallery.html"
-                     src="#try-img" position="14.2 1.1 2.2" rotation="0 -90 0" material=" shader: liquid-portal">
+                     src="#gallery-img" position="14.2 1.1 2.2" rotation="0 -90 0" material=" shader: liquid-portal">
                 <a-box color="black" width="1.5" position="0 -1 0" height="0.1" depth="0.1"></a-box>
                 <a-box color="black" width="1.5" position="0 1 0" height="0.1" depth="0.1"></a-box>
                 <a-box color="black" width="0.1" position="0.7 0 0" height="1.9" depth="0.1"></a-box>
@@ -202,8 +203,6 @@
             <!-- models  -->
             <a-gltf-model class="model" src="#skeleton" position="0 0 0" scale="1 1 1"> </a-gltf-model>
             <a-gltf-model class="model" src="#frontwall" position="0 0 0" scale="1 1 1"></a-gltf-model>
-
-
 
             <a-gltf-model class="model" src="#headd" position="0 0 0" scale="1 1 1"></a-gltf-model>
             <a-gltf-model class="model" src="#chandelier" position="0 0 0" scale="1 1 1"></a-gltf-model>

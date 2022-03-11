@@ -1,0 +1,59 @@
+#loading_screen {
+    padding-top: 30%;
+    height: 100%;
+    width: 100%;
+    background-color: #9944BB;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: fixed;
+}
+
+#loading_text {
+    font-family: monospace;
+    color: #44FFFF;
+    width: 80vw;
+    font-size: 4em;
+    text-align: center;
+    margin: auto;
+}
+
+#loading_bar {
+    position: relative;
+    height: 14px;
+    width: 80vw;
+    margin: auto;
+    border: solid 2px #44FFFF;
+    display: flex;
+    padding: 2px;
+}
+
+#loading_bar .stacking_item {
+    display: inline-block;
+    height: 14px;
+    background-color: #44FFFF;
+    width: auto;
+    display: flexbox;
+    flex-grow: 1;
+}
+
+#loading_bar .moving_item {
+    position: absolute;
+    display: flexbox;
+    border: solid 2px #9944BB;
+    height: 10px;
+    background-color: #44FFFF;
+    animation-name: fancy_bar;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes fancy_bar {
+    0%   {left:calc(0%);    width: 10%;}
+    20%  {left:20%;    width: 60%;}
+    40%  {left:calc(90% - 2px);    width: 10%;}
+    50%  {left:calc(90% - 2px);    width: 10%;}
+    70%  {left:20%;    width: 60%;}
+    90%  {left:calc(0%);    width: 10%;}
+    100%  {left:calc(0%);    width: 10%;}
+  }
