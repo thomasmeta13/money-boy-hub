@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> index </title>
+</head>
+
+<body>
+    <script>
+        function mouse() {
+            window.location = "/hub/hub.html?controls=mouse";
+            window.location.href = "/hub/hub.html?controls=mouse";
+            window.location.assign("/hub/hub.html?controls=mouse");
+            window.location.replace("/hub/hub.html?controls=mouse");
+        }
+        function controller() {
+            window.location = "/money-boy-hub/hub/hub.html?controls=controller";
+            window.location.href = "/money-boy-hub/hub/hub.html?controls=controller";
+            window.location.assign("/money-boy-hub/hub/hub.html?controls=controller");
+            window.location.replace("/money-boy-hub/hub/hub.html?controls=controller");
+        }
+    </script>
+
+    <div class="buttons">
+
+        <div class="action_btn">
+
+            <button onclick="controller()">controller</button>
+            <button onclick="mouse()">mouse</button>
+
+            <p id="saved"></p>
+
+        </div>
+
+    </div>
+</body>
+
+</html>

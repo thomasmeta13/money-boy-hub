@@ -234,7 +234,6 @@ function scroll_proposals_down() {
 function filter_proposals() {
     proposals_filter = this.id;
     build_proposals();
-    console.log("filtering proposals")
 }
 function build_big_screen_listeners() {
     document.getElementById('scroll_news_up').addEventListener('click', scroll_news_up);

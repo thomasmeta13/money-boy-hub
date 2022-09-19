@@ -47,7 +47,9 @@ function build_twitter() {
         twitter_itemEL.setAttribute('width', 2.8);
         twitter_itemEL.setAttribute('height', 0.7);
         twitter_itemEL.setAttribute('color', "#AA44BB");
-        twitter_itemEL.setAttribute('material', "shader: flat");
+        twitter_itemEL.setAttribute('material', "shader: flat; repeat: 1 1");
+        twitter_itemEL.setAttribute('src', "#tweet-img");
+
 
         var twitter_item_titleEL = document.createElement('a-text');
         twitter_itemEL.appendChild(twitter_item_titleEL);
@@ -66,7 +68,7 @@ function build_twitter() {
         twitter_item_textEL.setAttribute('baseline', "top");
         twitter_item_textEL.setAttribute('x-offset', 0.05);
         twitter_item_textEL.setAttribute("width", 2.7);
-        twitter_item_textEL.setAttribute('position', { x: -1.4, y: 0.2, z: 0.01 });
+        twitter_item_textEL.setAttribute('position', { x: -1.4, y: 0.15, z: 0.01 });
     }
     twitter_itemEL_array = document.getElementsByClassName("twitter_item");
     build_twitter_listeners();
@@ -107,12 +109,14 @@ function build_nft() {
     var nft_item_amountEL = document.createElement('a-text');
     nft_containerEl.appendChild(nft_item_amountEL);
     nft_item_amountEL.setAttribute('value', nft.price);
-    nft_item_amountEL.setAttribute('wrap-count', 20);
+    nft_item_amountEL.setAttribute('wrap-count', 15);
     nft_item_amountEL.setAttribute('baseline', "top");
     nft_item_amountEL.setAttribute('x-offset', 0.05);
     nft_item_amountEL.setAttribute("width", 3);
     nft_item_amountEL.setAttribute("align", "center");
-    nft_item_amountEL.setAttribute('position', { x: 0, y: -1.5, z: 0.01 });
+    nft_item_amountEL.setAttribute('position', { x: 0, y: -1.45, z: 0.01 });
+    nft_item_amountEL.setAttribute("color", "#AAEEFF");
+
 
     var nft_item_imageEL = document.createElement('a-image');
     nft_containerEl.appendChild(nft_item_imageEL);
@@ -127,7 +131,20 @@ function build_nft_listeners() {
 
 }
 
+var gif_img_index = 0;
+var gif_img_array = ["#gif-img1", "#gif-img2", "#gif-img3", "#gif-img4"]
+function startGif() {
+    document.getElementById("big_screen_img").setAttribute("src", gif_img_array[gif_img_index]);
+    if (gif_img_index < gif_img_array.length - 1)
+        gif_img_index++;
+    else
+    gif_img_index = 0;
+}
+
 function start_screens() {
     build_twitter();
     build_nft();
+    var intervalId = window.setInterval(function(){
+        startGif();
+    }, 500);
 }
